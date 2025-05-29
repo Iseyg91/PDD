@@ -44,6 +44,23 @@
     opacity: 1;
     transform: translateY(0);
   }
+  @keyframes floating-shadow {
+  0% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.6), 0 0 50px rgba(99, 102, 241, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  }
+}
+
+/* Classe utilitaire pour effet animé */
+.shadow-animated {
+  animation: floating-shadow 2.5s ease-in-out infinite;
+}
+
   </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col transition duration-300 ease-in-out">
@@ -81,7 +98,7 @@
       <span class="text-indigo-400 font-semibold">Project : Delta</span>.
     </p>
 
-    <button id="discord-login" class="flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white text-lg font-semibold shadow-lg transform hover:scale-105 transition duration-200">
+<button id="discord-login" class="shadow-animated flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white text-lg font-semibold shadow-lg transform hover:scale-105 transition duration-200">
       <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" class="w-6 h-6 mr-3" />
       Connexion avec Discord
     </button>
@@ -233,9 +250,10 @@
   });
 
   // Connexion Discord
+
   document.getElementById("discord-login").addEventListener("click", () => {
     document.getElementById("spinner").classList.remove("hidden");
-    window.location.href = "https://discord.com/oauth2/authorize?client_id=1356693934012891176&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fpages%2Findex.html&scope=identify+guilds";
+    window.location.href = "https://discord.com/oauth2/authorize?client_id=1356693934012891176&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fpages%2Fserveur.html&scope=identify+guilds";
   });
 
   // Swiper (carrousel)
