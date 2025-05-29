@@ -1,5 +1,5 @@
 const CLIENT_ID = "1356693934012891176";
-const REDIRECT_URI = encodeURIComponent("http://127.0.0.1:5500/pages/index.html");
+const REDIRECT_URI = encodeURIComponent("https://pdd-xrdi.onrender.com/serveur.html");
 
 const DISCORD_OAUTH2_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=identify+guilds`;
 
