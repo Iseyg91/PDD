@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CGU & CGV — Project : Delta</title>
+  <link rel="icon" href="/assets/delta-icon.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; 
+    overflow-x: hidden; /* Empêche le scroll horizontal */
+}
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col">
+
+<!-- Navigation -->
+<nav class="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40 shadow-md">
+  <div class="text-2xl font-bold text-indigo-400 animate-pulse">Project : Delta</div>
+  <button class="text-3xl md:hidden focus:outline-none" id="burger">☰</button>
+  <ul id="menu" class="hidden md:flex space-x-6 text-sm font-medium text-gray-300">
+    <li><a href="./index.html" class="text-indigo-400 hover:text-indigo-400 transition">Accueil</a></li>
+    <li><a href="./fonctionnalites.html" class="hover:text-indigo-400 transition">Fonctionnalités</a></li>
+    <li><a href="./support.html" class="hover:text-indigo-400 transition">Support</a></li>
+      <li>
+        <a href="https://discord.com/oauth2/authorize?client_id=TON_ID&scope=bot&permissions=8" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg shadow transition">
+          Inviter le bot
+        </a>
+      </li>
+    </ul>
+</nav>
+
+<main class="pt-32 px-6 pb-16 max-w-4xl mx-auto w-full animate-fade-in">
+  <h1 class="text-4xl font-extrabold text-indigo-400 mb-6 text-center">Conditions Générales d’Utilisation & de Vente</h1>
+
+  <section class="space-y-10 text-gray-300 text-sm sm:text-base leading-relaxed">
+
+    <!-- CGU -->
+    <div>
+      <h2 class="text-indigo-300 font-semibold text-xl mb-3">Conditions Générales d’Utilisation (CGU)</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li><strong>Accès :</strong> L’utilisation du bot Project : Delta et de ce site est gratuite (hors version premium).</li>
+        <li><strong>Comportement :</strong> L’utilisateur s’engage à ne pas utiliser le bot pour diffuser du contenu illicite, haineux, ou contraire au règlement de Discord.</li>
+        <li><strong>Responsabilité :</strong> L’éditeur ne peut être tenu responsable des dommages liés à l’utilisation du bot, ou de pertes de données.</li>
+        <li><strong>Modification :</strong> L’éditeur se réserve le droit de modifier à tout moment les CGU, sans préavis.</li>
+        <li><strong>Support :</strong> Toute question peut être adressée via le serveur support : <a href="https://discord.gg/rWuWu8YyZA" class="text-indigo-400 hover:underline">Serveur Discord officiel</a></p>
+      </ul>
+    </div>
+
+    <!-- CGV -->
+    <div>
+      <h2 class="text-indigo-300 font-semibold text-xl mb-3">Conditions Générales de Vente (CGV)</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li><strong>Produit :</strong> La version premium permet d’accéder à des fonctionnalités exclusives du bot Project : Delta.</li>
+        <li><strong>Paiement :</strong> Le paiement est effectué via PayPal. Le traitement est assuré par le responsable légal d’Isey. Aucune donnée bancaire n’est stockée.</li>
+        <li><strong>Livraison :</strong> L’activation des avantages premium est automatique ou manuelle dans un délai de 24h après réception du paiement.</li>
+        <li><strong>Droit de rétractation :</strong> Conformément à l’article L221-28 du Code de la consommation, le droit de rétractation ne s’applique pas pour les contenus numériques immédiatement accessibles après paiement.</li>
+        <li><strong>Remboursements :</strong> Aucun remboursement ne sera effectué sauf en cas de problème technique non résolu sous 7 jours.</li>
+        <li><strong>Litiges :</strong> En cas de litige, un recours amiable sera privilégié. Si nécessaire, la juridiction compétente sera celle du domicile de l’utilisateur.</li>
+      </ul>
+    </div>
+
+    <!-- Acceptation -->
+    <div>
+      <h2 class="text-indigo-300 font-semibold text-xl mb-3">Acceptation</h2>
+      <p>En utilisant le bot Project : Delta ou en effectuant un paiement, vous acceptez sans réserve les présentes CGU et CGV. En cas de désaccord, veuillez ne pas utiliser ces services.</p>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <h2 class="text-indigo-300 font-semibold text-xl mb-3">Contact</h2>
+      <p>Pour toute question ou demande : <a href="https://discord.gg/rWuWu8YyZA" class="text-indigo-400 hover:underline">Serveur Discord officiel</a></p>
+    </div>
+    
+  </section>
+<!-- Scroll to Top Button Container -->
+<div class="group fixed bottom-6 right-6 z-50">
+  <button id="scrollToTopBtn"
+    onclick="scrollToTop()"
+    class="hidden opacity-0 scale-90 transition-all duration-300 ease-in-out 
+    bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 
+    hover:from-purple-500 hover:to-indigo-600 
+    text-white p-5 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.6)] 
+    text-3xl transform hover:scale-110 hover:rotate-6 focus:outline-none">
+    
+    <i class="fas fa-arrow-up transition-transform duration-300 group-hover:rotate-180"></i>
+    <span class="sr-only">Remonter en haut</span>
+  </button>
+
+  <!-- Tooltip -->
+  <div class="absolute bottom-full mb-2 hidden group-hover:block text-sm font-medium 
+  text-white bg-black bg-opacity-80 px-3 py-1 rounded shadow-lg transition-all duration-300 animate-fade-in">
+    Remonter
+  </div>
+</div>
+</main>
+
+<footer class="bg-gray-900 border-t border-gray-700 mt-auto animate-fade-in px-6 pt-12 pb-8 text-sm text-gray-400">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+  
+    <!-- Branding -->
+    <div>
+      <h3 class="font-semibold text-white text-base mb-3">Project : Delta</h3>
+      <p class="text-gray-500 leading-relaxed">
+        Un bot Discord de gestion complet, puissant et personnalisable, lancé en 2024.
+      </p>
+    </div>
+  
+    <!-- Navigation -->
+    <div>
+      <h3 class="font-semibold text-white text-base mb-3">Navigation</h3>
+      <ul class="space-y-2">
+        <li><a href="./index.html" class="hover:text-indigo-400 transition-colors duration-200">Accueil</a></li>
+        <li><a href="./fonctionnalites.html" class="hover:text-indigo-400 transition-colors duration-200">Fonctionnalités</a></li>
+        <li><a href="./equipe.html" class="hover:text-indigo-400 transition-colors duration-200">Équipe</a></li>
+      </ul>
+    </div>
+
+    <!-- Documentation -->
+    <div>
+      <h3 class="font-semibold text-white text-base mb-3">Documentation</h3>
+      <ul class="space-y-2">
+        <li><a href="./support.html" class="hover:text-indigo-400 transition-colors duration-200">Support</a></li>
+        <li><a href="./faq.html" class="hover:text-indigo-400 transition-colors duration-200">FAQ</a></li>
+        <li><a href="./premium.html" class="hover:text-indigo-400 transition-colors duration-200">Premium</a></li>
+      </ul>
+    </div>
+  
+    <!-- Legal -->
+    <div>
+      <h3 class="font-semibold text-white text-base mb-3">Légal</h3>
+      <ul class="space-y-2">
+        <li><a href="./mentions-legales.html" class="hover:text-indigo-400 transition-colors duration-200">Mentions légales</a></li>
+        <li><a href="./politique-confidentialite.html" class="hover:text-indigo-400 transition-colors duration-200">Politique de confidentialité</a></li>
+        <li><a href="./cgu-cgv.html" class="hover:text-indigo-400 transition-colors duration-200">Conditions d'utilisation</a></li>
+      </ul>
+    </div>
+  
+    <!-- Contact & Réseaux -->
+    <div>
+      <h3 class="font-semibold text-white text-base mb-3">Contact</h3>
+      <p>
+        <a href="" class="hover:text-indigo-400 transition-colors duration-200">
+          contact.project.delta@gmail.com
+        </a>
+      </p>
+      <div class="flex items-center space-x-4 mt-4">
+        <a href="https://discord.gg/rWuWu8YyZA" target="_blank" aria-label="Serveur Discord" class="hover:scale-110 transform transition duration-300">
+          <img src="https://i.pinimg.com/736x/5a/dc/86/5adc86fedf90debb35e5058c52d48879.jpg" alt="Discord" class="w-9 h-9 rounded-full shadow-md">
+        </a>
+        <a href="https://www.instagram.com/delta.projet/?next=%2F" target="_blank" aria-label="Page Instagram" class="hover:scale-110 transform transition duration-300">
+          <img src="https://i.pinimg.com/736x/7e/76/7f/7e767fe360fe2a528c8feb3cd6a7ed19.jpg" alt="Instagram" class="w-9 h-9 rounded-full shadow-md">
+        </a>
+        <a href="https://x.com/Delta_Proj_Isey" target="_blank" aria-label="Profil Twitter" class="hover:scale-110 transform transition duration-300">
+          <img src="https://i.pinimg.com/736x/cc/31/6f/cc316f97197528e5e26e613a93ab16a4.jpg" alt="X" class="w-9 h-9 rounded-full shadow-md">
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom copyright -->
+  <div class="max-w-6xl mx-auto mt-10 border-t border-gray-700 pt-4 text-center text-xs text-gray-500">
+    © 2025 <span class="font-medium text-white">Project : Delta</span>. Tous droits réservés. <br class="sm:hidden" />
+    Ce site n'est pas affilié à Discord Inc.
+  </div>
+</footer>
+<script>
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollToTopBtn.classList.remove('hidden');
+      setTimeout(() => {
+        scrollToTopBtn.classList.add('opacity-100', 'scale-100');
+      }, 10);
+    } else {
+      scrollToTopBtn.classList.remove('opacity-100', 'scale-100');
+      setTimeout(() => {
+        if (window.scrollY <= 300) {
+          scrollToTopBtn.classList.add('hidden');
+        }
+      }, 300);
+    }
+  });
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // ✅ Bonus UX : vibration légère sur mobile
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+</script>
+</body>
+</html>
