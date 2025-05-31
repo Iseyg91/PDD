@@ -35,74 +35,21 @@
 </head>
 <body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen">
 
-<!-- Navigation -->
-<nav class="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40 shadow-md">
-  <div class="text-2xl font-bold text-indigo-400 animate-pulse">Project : Delta</div>
-  <button class="text-3xl text-gray-300 md:hidden focus:outline-none" id="burger">☰</button>
-  <ul id="menu" class="hidden md:flex space-x-6 text-sm font-medium text-gray-300 items-center">
-    <li><a href="./index.html" class="hover:text-indigo-400 transition">Accueil</a></li>
-    <li><a href="./fonctionnalites.html" class="hover:text-indigo-400 transition">Fonctionnalités</a></li>
-    <li><a href="./support.html" class="hover:text-indigo-400 transition">Support</a></li>
-    <li>
-      <a href="https://discord.com/oauth2/authorize?client_id=1356693934012891176"
-         class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg shadow transition duration-300">
-        Inviter le bot
-      </a>
-    </li>
-    <li>
-<a href="./premium.html"
-   class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-white font-semibold px-4 py-2 rounded-lg shadow-lg transition duration-300">
-  Premium
-</a>
-    </li>
-  </ul>
-</nav>
+  <!-- Navigation -->
+  <nav class="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40 shadow-md">
+    <div class="text-2xl font-bold text-indigo-400 animate-pulse">Project : Delta</div>
+    <ul class="hidden md:flex space-x-6 text-sm font-medium text-gray-300">
+      <li><a href="/" class="hover:text-indigo-400 transition">Accueil</a></li>
+      <li><a href="/dashboard.html" class="hover:text-indigo-400 transition">Dashboard</a></li>
+      <li><a href="/support.html" class="hover:text-indigo-400 transition">Support</a></li>
+    </ul>
+  </nav>
 
   <!-- Contenu principal -->
   <main class="pt-32 px-6 pb-12 max-w-6xl mx-auto">
     <h1 class="text-4xl font-extrabold mb-10 text-center text-indigo-300">Vos serveurs</h1>
     <div id="user-info" class="text-center mb-8"></div>
     <div id="guilds" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
-    <!-- Scroll to Top Button Container -->
-<div class="group fixed bottom-6 right-6 z-50">
-  <button id="scrollToTopBtn"
-    onclick="scrollToTop()"
-    class="hidden opacity-0 scale-90 transition-all duration-300 ease-in-out 
-    bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 
-    hover:from-purple-500 hover:to-indigo-600 
-    text-white p-5 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.6)] 
-    text-3xl transform hover:scale-110 hover:rotate-6 focus:outline-none">
-    
-    <i class="fas fa-arrow-up transition-transform duration-300 group-hover:rotate-180"></i>
-    <span class="sr-only">Remonter en haut</span>
-  </button>
-
-  <!-- Tooltip -->
-  <div class="absolute bottom-full mb-2 hidden group-hover:block text-sm font-medium 
-  text-white bg-black bg-opacity-80 px-3 py-1 rounded shadow-lg transition-all duration-300 animate-fade-in">
-    Remonter
-  </div>
-</div>
-<!-- Scroll to Top Button Container -->
-<div class="group fixed bottom-6 right-6 z-50">
-  <button id="scrollToTopBtn"
-    onclick="scrollToTop()"
-    class="hidden opacity-0 scale-90 transition-all duration-300 ease-in-out 
-    bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 
-    hover:from-purple-500 hover:to-indigo-600 
-    text-white p-5 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.6)] 
-    text-3xl transform hover:scale-110 hover:rotate-6 focus:outline-none">
-    
-    <i class="fas fa-arrow-up transition-transform duration-300 group-hover:rotate-180"></i>
-    <span class="sr-only">Remonter en haut</span>
-  </button>
-
-  <!-- Tooltip -->
-  <div class="absolute bottom-full mb-2 hidden group-hover:block text-sm font-medium 
-  text-white bg-black bg-opacity-80 px-3 py-1 rounded shadow-lg transition-all duration-300 animate-fade-in">
-    Remonter
-  </div>
-</div>
   </main>
 
 <footer class="bg-gray-900 border-t border-gray-700 mt-auto animate-fade-in px-6 pt-12 pb-8 text-sm text-gray-400">
@@ -112,7 +59,7 @@
     <div>
       <h3 class="font-semibold text-white text-base mb-3">Project : Delta</h3>
       <p class="text-gray-500 leading-relaxed">
-        Un bot Discord de gestion complet, puissant et personnalisable, lancé en 2025.
+        Un bot Discord de gestion complet, puissant et personnalisable, lancé en 2024.
       </p>
     </div>
   
@@ -176,21 +123,30 @@
 </footer>
 
 <script>
-if (code) {
-  fetch(`https://discord-oauth-6z2s.onrender.com/api/discord-oauth?code=${code}&redirect_uri=${encodeURIComponent("https://pdd-xrdi.onrender.com/serveur.html?code=AxJBzuUT5UmZwegIt3DtRq5uMZVXW4")}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        afficherInfosUtilisateur(data.user);
-        console.log("Serveurs mutualisés :", data.mutualGuilds);
-      } else {
-        console.error("Erreur d'authentification :", data.error, data.details);
-      }
-    })
-    .catch(err => console.error("Erreur lors de l’appel à l’API :", err));
-} else {
-  console.error("Code OAuth manquant dans l’URL");
-}
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get("code");
+  const returnedState = urlParams.get("state");
+  const savedState = localStorage.getItem("oauth2_state");
+
+  async function afficherInfosUtilisateur(user) {
+    const container = document.getElementById("user-info");
+    const avatarURL = user.avatar
+      ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+      : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discriminator) % 5}.png`;
+
+    container.innerHTML = `
+      <div class="flex items-center justify-center gap-4">
+        <img src="${avatarURL}" alt="Avatar"
+          class="w-16 h-16 rounded-full shadow-md avatar-float transition duration-300 hover:scale-110 ring-2 ring-indigo-400 object-cover">
+        <p class="text-lg">
+          Connecté en tant que 
+          <span class="font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
+            ${user.username}
+          </span>
+        </p>
+      </div>
+    `;
+  }
 
 async function afficherGuilds(guilds) {
   const container = document.getElementById("guilds");
@@ -271,31 +227,6 @@ async function afficherGuilds(guilds) {
   }
 
   start();
-    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      scrollToTopBtn.classList.remove('hidden');
-      setTimeout(() => {
-        scrollToTopBtn.classList.add('opacity-100', 'scale-100');
-      }, 10);
-    } else {
-      scrollToTopBtn.classList.remove('opacity-100', 'scale-100');
-      setTimeout(() => {
-        if (window.scrollY <= 300) {
-          scrollToTopBtn.classList.add('hidden');
-        }
-      }, 300);
-    }
-  });
-
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // ✅ Bonus UX : vibration légère sur mobile
-    if (navigator.vibrate) navigator.vibrate(10);
-  }
 </script>
 </body>
 </html>
-
