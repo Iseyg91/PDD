@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration du Serveur — Project : Delta</title>
+  <link rel="icon" href="/assets/delta-icon.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #121212;
+      color: white;
+    }
+    .form-container {
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background-color: #2d2d2d;
+      color: white;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: #6366f1;
+      outline: none;
+    }
+    button {
+      background-color: #6366f1;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover {
+      background-color: #4f46e5;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen">
+  <nav class="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40 shadow-md">
+    <div class="text-2xl font-bold text-indigo-400 animate-pulse">Project : Delta</div>
+    <ul class="hidden md:flex space-x-6 text-sm font-medium text-gray-300">
+      <li><a href="/" class="hover:text-indigo-400 transition">Accueil</a></li>
+      <li><a href="/dashboard.html" class="hover:text-indigo-400 transition">Dashboard</a></li>
+      <li><a href="/support.html" class="hover:text-indigo-400 transition">Support</a></li>
+      <li><a href="./premium.html" class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-white font-semibold px-4 py-2 rounded-lg shadow-lg transition duration-300">Premium</a></li>
+    </ul>
+  </nav>
+
+  <main class="pt-32 px-6 pb-12 max-w-4xl mx-auto">
+    <h1 class="text-4xl font-extrabold mb-10 text-center text-indigo-300">Configuration du Serveur</h1>
+    <div class="form-container">
+      <form id="setupForm">
+        <div class="form-group">
+          <label for="serverName">Nom du Serveur</label>
+          <input type="text" id="serverName" name="serverName" required>
+        </div>
+        <div class="form-group">
+          <label for="welcomeChannel">Channel de Bienvenue</label>
+          <input type="text" id="welcomeChannel" name="welcomeChannel" required>
+        </div>
+        <div class="form-group">
+          <label for="welcomeMessage">Message de Bienvenue</label>
+          <textarea id="welcomeMessage" name="welcomeMessage" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="logChannel">Channel de Logs</label>
+          <input type="text" id="logChannel" name="logChannel" required>
+        </div>
+        <div class="form-group">
+          <label for="modRole">Rôle des Modérateurs</label>
+          <input type="text" id="modRole" name="modRole" required>
+        </div>
+        <button type="submit">Enregistrer</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const serverId = urlParams.get("serverId");
+
+      if (serverId) {
+        try {
+          const response = await fetch(`/api/guild/setup/${serverId}`);
+          const data = await response.json();
+
+          if (data.success) {
+            document.getElementById("serverName").value = data.setup.serverName || '';
+            document.getElementById("welcomeChannel").value = data.setup.welcomeChannel || '';
+            document.getElementById("welcomeMessage").value = data.setup.welcomeMessage || '';
+            document.getElementById("logChannel").value = data.setup.logChannel || '';
+            document.getElementById("modRole").value = data.setup.modRole || '';
+          } else {
+            alert("Erreur lors de la récupération des informations de configuration.");
+          }
+        } catch (err) {
+          console.error("Erreur lors de la récupération des informations de configuration:", err);
+          alert("Erreur lors de la récupération des informations de configuration.");
+        }
+      }
+
+      document.getElementById("setupForm").onsubmit = async function(e) {
+        e.preventDefault();
+
+        const setupData = {
+          serverName: document.getElementById("serverName").value,
+          welcomeChannel: document.getElementById("welcomeChannel").value,
+          welcomeMessage: document.getElementById("welcomeMessage").value,
+          logChannel: document.getElementById("logChannel").value,
+          modRole: document.getElementById("modRole").value
+        };
+
+        try {
+          const response = await fetch(`/api/guild/setup/${serverId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(setupData)
+          });
+
+          const data = await response.json();
+          if (data.success) {
+            alert("Informations de configuration mises à jour avec succès !");
+          } else {
+            alert("Erreur lors de la mise à jour des informations de configuration.");
+          }
+        } catch (err) {
+          console.error("Erreur lors de la mise à jour des informations de configuration:", err);
+          alert("Erreur lors de la mise à jour des informations de configuration.");
+        }
+      };
+    });
+  </script>
+</body>
+</html>
