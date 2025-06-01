@@ -69,24 +69,20 @@
     <div class="form-container">
       <form id="setupForm">
         <div class="form-group">
-          <label for="serverName">Nom du Serveur</label>
-          <input type="text" id="serverName" name="serverName" required>
+          <label for="prefix">Préfixe du Bot</label>
+          <input type="text" id="prefix" name="prefix" required>
         </div>
         <div class="form-group">
-          <label for="welcomeChannel">Channel de Bienvenue</label>
-          <input type="text" id="welcomeChannel" name="welcomeChannel" required>
+          <label for="owner">Propriétaire</label>
+          <input type="text" id="owner" name="owner" required>
         </div>
         <div class="form-group">
-          <label for="welcomeMessage">Message de Bienvenue</label>
-          <textarea id="welcomeMessage" name="welcomeMessage" rows="4" required></textarea>
+          <label for="admin_role">Rôle Admin</label>
+          <input type="text" id="admin_role" name="admin_role" required>
         </div>
         <div class="form-group">
-          <label for="logChannel">Channel de Logs</label>
-          <input type="text" id="logChannel" name="logChannel" required>
-        </div>
-        <div class="form-group">
-          <label for="modRole">Rôle des Modérateurs</label>
-          <input type="text" id="modRole" name="modRole" required>
+          <label for="staff_role">Rôle Staff</label>
+          <input type="text" id="staff_role" name="staff_role" required>
         </div>
         <button type="submit">Enregistrer</button>
       </form>
@@ -104,11 +100,10 @@
           const data = await response.json();
 
           if (data.success) {
-            document.getElementById("serverName").value = data.setup.serverName || '';
-            document.getElementById("welcomeChannel").value = data.setup.welcomeChannel || '';
-            document.getElementById("welcomeMessage").value = data.setup.welcomeMessage || '';
-            document.getElementById("logChannel").value = data.setup.logChannel || '';
-            document.getElementById("modRole").value = data.setup.modRole || '';
+            document.getElementById("prefix").value = data.setup.prefix || '';
+            document.getElementById("owner").value = data.setup.owner || '';
+            document.getElementById("admin_role").value = data.setup.admin_role || '';
+            document.getElementById("staff_role").value = data.setup.staff_role || '';
           } else {
             alert("Erreur lors de la récupération des informations de configuration.");
           }
@@ -122,11 +117,10 @@
         e.preventDefault();
 
         const setupData = {
-          serverName: document.getElementById("serverName").value,
-          welcomeChannel: document.getElementById("welcomeChannel").value,
-          welcomeMessage: document.getElementById("welcomeMessage").value,
-          logChannel: document.getElementById("logChannel").value,
-          modRole: document.getElementById("modRole").value
+          prefix: document.getElementById("prefix").value,
+          owner: document.getElementById("owner").value,
+          admin_role: document.getElementById("admin_role").value,
+          staff_role: document.getElementById("staff_role").value
         };
 
         try {
