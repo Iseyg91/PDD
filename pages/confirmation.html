@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Message envoyé</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f172a, #000);
+      background-size: 400% 400%;
+      animation: backgroundShift 15s ease infinite;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .tick path {
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      animation: draw 1s ease forwards 0.3s;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .glass {
+      backdrop-filter: blur(25px);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 0 0.5rem rgba(255, 255, 255, 0.05),
+        0 0 2rem rgba(99, 102, 241, 0.2),
+        inset 0 0 0.25rem rgba(255, 255, 255, 0.05);
+    }
+
+    .fade-in {
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-glow {
+      background-color: #6366f1;
+      color: white;
+      border-radius: 9999px;
+      box-shadow: 0 0 20px #6366f1aa;
+      transition: all 0.3s ease;
+      animation: pulseGlow 2s infinite;
+    }
+
+    .btn-glow:hover {
+      background-color: #4f46e5;
+      transform: scale(1.05);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 10px #6366f1aa;
+      }
+      50% {
+        box-shadow: 0 0 25px #6366f1;
+      }
+    }
+
+    #timer {
+      transition: opacity 0.5s ease;
+    }
+
+    canvas#delta-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+      .halo {
+    position: relative;
+  }
+
+  .halo::before {
+    content: '';
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(34,197,94,0.4), transparent 70%);
+    border-radius: 50%;
+    animation: pulseHalo 2s infinite;
+    z-index: -1;
+  }
+
+  @keyframes pulseHalo {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0.2;
+    }
+  }
+
+  /* Ajout : glow global doux du bloc */
+  .glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1.5rem;
+    background: radial-gradient(circle at top left, rgba(99,102,241,0.1), transparent);
+    z-index: -1;
+    filter: blur(40px);
+    pointer-events: none;
+  }
+
+  /* Ajout : bouton ripple effect */
+  .btn-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-glow::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: none;
+    pointer-events: none;
+  }
+
+  .btn-glow:active::after {
+    animation: ripple 0.6s ease-out;
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  .btn-glow:active::after {
+    top: var(--y);
+    left: var(--x);
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Ajout : glow titre */
+  h1 {
+    text-shadow: 0 0 15px #10b981aa;
+  }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-white px-4 relative">
+
+  <!-- Fond animé -->
+  <canvas id="delta-bg"></canvas>
+
+  <!-- Contenu principal -->
+  <div class="glass rounded-3xl p-10 max-w-xl w-full text-center space-y-8 fade-in z-10">
+    <div class="flex justify-center">
+      <svg class="w-24 h-24 text-green-400 tick" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <h1 class="text-5xl font-black text-green-400 drop-shadow-2xl tracking-tight">Message envoyé !</h1>
+    <p class="text-gray-300 text-lg leading-relaxed">
+      Ton message a bien été pris en compte. On te répond dès que possible.
+    </p>
+    <a href="index.html" class="btn-glow inline-block px-8 py-3 font-semibold text-lg transition-all duration-300">
+      Retour à l'accueil
+    </a>
+    <p class="text-sm text-gray-500">Redirection dans <span id="timer">5</span>s...</p>
+  </div>
+
+  <script>
+    // Timer
+    let seconds = 5;
+    const timer = document.getElementById('timer');
+    const interval = setInterval(() => {
+      seconds--;
+      if (seconds <= 0) {
+        clearInterval(interval);
+        window.location.href = "index.html";
+      } else {
+        timer.textContent = seconds;
+      }
+    }, 1000);
+
+    // Canvas : Deltas animés
+    const canvas = document.getElementById('delta-bg');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    const chars = ['Δ', 'δ'];
+    const particles = [];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    for (let i = 0; i < 50; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 24 + 12,
+        char: chars[Math.floor(Math.random() * chars.length)],
+        speedY: Math.random() * 0.3 + 0.1,
+        opacity: Math.random() * 0.2 + 0.05
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.font = "bold 30px Segoe UI";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      for (let p of particles) {
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+        ctx.font = `${p.size}px 'Segoe UI Symbol'`;
+        ctx.fillText(p.char, p.x, p.y);
+        p.y += p.speedY;
+        if (p.y > height) p.y = -50;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+    document.querySelector('.btn-glow').addEventListener('click', function(e) {
+  const rect = this.getBoundingClientRect();
+  this.style.setProperty('--x', `${e.clientX - rect.left}px`);
+  this.style.setProperty('--y', `${e.clientY - rect.top}px`);
+});
+  </script>
+
+</body>
+</html>
