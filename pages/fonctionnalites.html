@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fonctionnalités — Project : Delta</title>
+  <link rel="icon" href="/assets/delta-icon.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d5f6a6b1.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden; /* Empêche le scroll horizontal */
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-in-out both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feature-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2);
+    }
+
+    .feature-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: rotate(5deg) scale(1.1);
+    }
+    .swiper-slide {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+.rotate-180 {
+  transform: rotate(180deg);
+}
+#loader {
+  transition: opacity 0.7s ease-out, backdrop-filter 0.3s;
+  backdrop-filter: blur(8px);
+}
+.faq-answer {
+  transition: max-height 0.5s ease;
+  overflow: hidden;
+}
+/* Animation fade-in-up */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* Nouvelle animation glow (aura divine pulsante) */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Effet de lueur lente (pour icône, contours, etc.) */
+.glow {
+  animation: glow 6s ease-in-out infinite;
+}
+
+/* Animation flicker (flamme instable) */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.3;
+  }
+}
+
+/* Classe pour effet de scintillement */
+.flicker {
+  animation: flicker 3s infinite;
+}
+
+/* Shine animé (effet de lumière glissant) */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.shine {
+  animation: shine 2s linear infinite;
+}
+
+/* Pulse rapide pour halos ou fond dynamique */
+@keyframes pulseFast {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+.pulse-fast {
+  animation: pulseFast 1.5s infinite;
+}
+
+/* Animation fade classique */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes core-glow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+@keyframes prismatic {
+  0% {
+    transform: rotate(0deg);
+    border-color: rgba(255,255,255,0.15);
+  }
+  100% {
+    transform: rotate(360deg);
+    border-color: rgba(255,255,255,0.25);
+  }
+}
+
+.animate-floating {
+  animation: floating 4s ease-in-out infinite;
+}
+.animate-core-glow {
+  animation: core-glow 3s ease-in-out infinite;
+}
+.animate-prismatic {
+  animation: prismatic 10s linear infinite;
+  border-radius: 9999px;
+}
+
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col">
+  <!-- Loader -->
+  <div id="loader" class="fixed inset-0 flex items-center justify-center bg-gray-900 z-50">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-500"></div>
+  </div>
+
+<!-- Navigation -->
+<nav class="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40 shadow-md">
+  <div class="text-2xl font-bold text-indigo-400 animate-pulse">Project : Delta</div>
+  <button class="text-3xl text-gray-300 md:hidden focus:outline-none" id="burger">☰</button>
+  <ul id="menu" class="hidden md:flex space-x-6 text-sm font-medium text-gray-300 items-center">
+    <li>
+      <a href="./documentation.html"
+         class="bg-gray-800 hover:bg-gray-700 text-white font-medium px-4 py-2 rounded-lg shadow transition duration-300">
+        Documentation & Infos
+      </a>
+    </li>
+    <li>
+      <a href="https://discord.com/oauth2/authorize?client_id=1356693934012891176"
+         class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg shadow transition duration-300">
+        Inviter le bot
+      </a>
+    </li>
+    <li>
+      <a href="./premium.html"
+         class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-white font-semibold px-4 py-2 rounded-lg shadow-lg transition duration-300">
+        Premium
+      </a>
+    </li>
+  </ul>
+</nav>
+
+    <!-- Mobile menu button -->
+    <button id="menu-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden mt-4 space-y-2 hidden text-sm font-medium text-gray-300">
+    <a href="index.html" class="block hover:text-indigo-400 transition">Accueil</a>
+    <a href="#" class="block text-indigo-400 font-semibold">Fonctionnalités</a>
+    <a href="support.html" class="block hover:text-indigo-400 transition">Support</a>
+    <a href="https://discord.com/oauth2/authorize?client_id=TON_ID&scope=bot&permissions=8"
+      class="block bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-center shadow transition">
+      Inviter le bot
+    </a>
+  </div>
+</nav>
+
+<a href="./index.html"
+   aria-label="Retour à l'accueil"
+   class="fixed bottom-6 left-6 z-50 group inline-flex items-center gap-3 px-6 py-3 rounded-full text-white font-semibold shadow-xl backdrop-blur-xl backdrop-saturate-200 bg-opacity-80 transition-all duration-500 ease-in-out hover:scale-[1.12] active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 ring-offset-2 ring-offset-gray-900 text-sm md:text-base overflow-hidden animate-fade-in animate-floating bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700">
+
+  <!-- Halo cosmique flottant -->
+  <span aria-hidden="true"
+        class="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 blur-2xl opacity-25 group-hover:opacity-40 transition duration-700 animate-pulse-fast pointer-events-none">
+  </span>
+
+  <!-- Reflet prismatique tournant -->
+  <span aria-hidden="true"
+        class="absolute inset-0 rounded-full border border-white/20 animate-prismatic pointer-events-none">
+  </span>
+
+  <!-- Cœur énergétique pulsant -->
+  <span aria-hidden="true"
+        class="absolute left-1/2 top-1/2 w-16 h-16 bg-white/10 rounded-full blur-xl opacity-30 animate-core-glow pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0">
+  </span>
+
+  <!-- Shine céleste -->
+  <span aria-hidden="true"
+        class="absolute left-[-75%] top-0 w-[150%] h-full bg-white/10 transform rotate-12 group-hover:animate-shine pointer-events-none">
+  </span>
+
+  <!-- Icône -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       class="relative z-10 h-6 w-6 text-white drop-shadow-lg animate-flicker transition-transform duration-300 ease-in-out group-hover:-translate-y-1 group-hover:scale-110 group-active:scale-90"
+       fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5M4.5 10.5V20h15v-9.5" />
+  </svg>
+
+  <!-- Texte -->
+  <span class="relative z-10 hidden sm:inline">Accueil</span>
+
+  <!-- Tooltip -->
+  <span aria-hidden="true"
+        class="absolute -top-11 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-3 py-1 rounded-md shadow-lg opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none z-20">
+    Retour à l'accueil
+  </span>
+</a>
+  <!-- Contenu -->
+  <main class="pt-32 pb-20 px-4 max-w-7xl mx-auto fade-in">
+    <h1 class="text-4xl sm:text-5xl font-extrabold mb-12 text-center bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+      Les Fonctionnalités de Project : Delta
+    </h1>
+
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Fonctionnalité -->
+      <div class="bg-gray-800 p-6 rounded-xl border border-indigo-500/20 feature-card">
+        <div class="text-indigo-400 text-3xl mb-4 feature-icon"><i class="fas fa-shield-alt"></i></div>
+        <h2 class="text-xl font-semibold mb-2">Anti-Raid & Sécurité</h2>
+        <p class="text-gray-400 text-sm">Détection intelligente des raids, anti-lien, anti-pub, et gestion avancée des permissions pour une protection optimale.</p>
+      </div>
+
+      <div class="bg-gray-800 p-6 rounded-xl border border-indigo-500/20 feature-card">
+        <div class="text-indigo-400 text-3xl mb-4 feature-icon"><i class="fas fa-gavel"></i></div>
+        <h2 class="text-xl font-semibold mb-2">Modération Avancée</h2>
+        <p class="text-gray-400 text-sm">Commandes efficaces : mute, ban, warn, logs détaillés, et système de signalement configurable.</p>
+      </div>
+
+      <div class="bg-gray-800 p-6 rounded-xl border border-indigo-500/20 feature-card">
+        <div class="text-indigo-400 text-3xl mb-4 feature-icon"><i class="fas fa-bolt"></i></div>
+        <h2 class="text-xl font-semibold mb-2">Automations Intelligentes</h2>
+        <p class="text-gray-400 text-sm">Auto-rôles, réponses automatiques, tags et réactions personnalisables.</p>
+      </div>
+
+      <div class="bg-gray-800 p-6 rounded-xl border border-indigo-500/20 feature-card">
+        <div class="text-indigo-400 text-3xl mb-4 feature-icon"><i class="fas fa-database"></i></div>
+        <h2 class="text-xl font-semibold mb-2">Gestion Centralisée</h2>
+        <p class="text-gray-400 text-sm">Dashboard complet pour tout gérer depuis une seule interface intuitive.</p>
+      </div>
+
+      <div class="bg-gray-800 p-6 rounded-xl border border-indigo-500/20 feature-card">
+        <div class="text-indigo-400 text-3xl mb-4 feature-icon"><i class="fas fa-chart-line"></i></div>
+        <h2 class="text-xl font-semibold mb-2">Statistiques & Logs</h2>
+        <p class="text-gray-400 text-sm">Suivi complet : actions, événements, activité des membres, et plus.</p>
+      </div>
+
+      <div class="bg-gray-800 p-6 rounded-xl border border-indigo-500/20 feature-card">
+        <div class="text-indigo-400 text-3xl mb-4 feature-icon"><i class="fas fa-puzzle-piece"></i></div>
+        <h2 class="text-xl font-semibold mb-2">Modules Personnalisables</h2>
+        <p class="text-gray-400 text-sm">Active/désactive les systèmes selon tes besoins : anti-everyone, réponse bot, avertissements, etc.</p>
+      </div>
+    </div>
+
+<!-- Carrousel Nouveautés -->
+<section class="my-20">
+  <h2 class="text-3xl font-bold text-center mb-8">🧪 Nouveautés à venir</h2>
+  <div class="swiper-container max-w-full overflow-hidden px-4 sm:px-0 mx-auto">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide bg-gray-800 p-6 rounded-xl border border-indigo-500/20 text-center">
+        <h3 class="text-xl font-semibold mb-2 text-indigo-400">Système de Captcha</h3>
+        <p class="text-gray-400 text-sm">Sécurisez votre serveur avec une vérification automatique à l'arrivée des nouveaux membres.</p>
+      </div>
+      <div class="swiper-slide bg-gray-800 p-6 rounded-xl border border-indigo-500/20 text-center">
+        <h3 class="text-xl font-semibold mb-2 text-indigo-400">Système de Back-up</h3>
+        <p class="text-gray-400 text-sm">Sauvegardez et restaurez votre serveur Discord en un clic : rôles, salons, permissions et plus encore.</p>
+      </div>
+      <div class="swiper-slide bg-gray-800 p-6 rounded-xl border border-indigo-500/20 text-center">
+        <h3 class="text-xl font-semibold mb-2 text-indigo-400">Ticket & Logs</h3>
+        <p class="text-gray-400 text-sm">Gérez le support avec un système de tickets complet et suivez les actions du serveur grâce aux logs automatiques.</p>
+      </div>
+    </div>
+    <div class="swiper-pagination mt-4"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="my-20 px-4">
+  <h2 class="text-4xl font-bold text-center mb-10 text-white">❓FAQ</h2>
+  <div class="space-y-6 max-w-3xl mx-auto">
+    
+    <!-- Question 1 -->
+    <div class="bg-gray-800/90 p-5 rounded-2xl shadow-md">
+      <button class="faq-question w-full flex justify-between items-center text-left text-white font-semibold text-lg focus:outline-none">
+        <span>🔗 Comment inviter Project : Delta sur mon serveur ?</span>
+        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+      </button>
+      <div class="faq-answer mt-3 text-sm text-gray-300 hidden">
+        Clique simplement sur le bouton <strong>"Inviter"</strong> en haut du site, ou utilise la commande <code class="bg-gray-700 px-1 rounded">+getbotinfo</code> dans un serveur où le bot est présent.
+      </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="bg-gray-800/90 p-5 rounded-2xl shadow-md">
+      <button class="faq-question w-full flex justify-between items-center text-left text-white font-semibold text-lg focus:outline-none">
+        <span>💸 Le bot est-il entièrement gratuit ?</span>
+        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+      </button>
+      <div class="faq-answer mt-3 text-sm text-gray-300 hidden">
+        Oui ! Toutes les fonctionnalités principales sont gratuites. Des options premium pourront être proposées à l’avenir, mais elles resteront <strong>100% facultatives</strong>.
+      </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="bg-gray-800/90 p-5 rounded-2xl shadow-md">
+      <button class="faq-question w-full flex justify-between items-center text-left text-white font-semibold text-lg focus:outline-none">
+        <span>⚙️ Puis-je personnaliser le comportement du bot ?</span>
+        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+      </button>
+      <div class="faq-answer mt-3 text-sm text-gray-300 hidden">
+        Bien sûr ! Tu peux configurer les messages d’accueil, les logs, les réponses automatiques, et bien plus encore depuis le <strong>dashboard</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Bouton retour -->
+    <div class="text-center mt-16">
+      <a href="index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-lg font-medium transition shadow-md">
+        <i class="fas fa-arrow-left"></i> Retour à l'accueil
+      </a>
+    </div>
+  </main>
+<!-- Scroll to Top Button Container -->
+<div class="group fixed bottom-6 right-6 z-50">
+  <button id="scrollToTopBtn"
+    onclick="scrollToTop()"
+    class="hidden opacity-0 scale-90 transition-all duration-300 ease-in-out 
+    bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 
+    hover:from-purple-500 hover:to-indigo-600 
+    text-white p-5 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.6)] 
+    text-3xl transform hover:scale-110 hover:rotate-6 focus:outline-none">
+    
+    <i class="fas fa-arrow-up transition-transform duration-300 group-hover:rotate-180"></i>
+    <span class="sr-only">Remonter en haut</span>
+  </button>
+
+  <!-- Tooltip -->
+  <div class="absolute bottom-full mb-2 hidden group-hover:block text-sm font-medium 
+  text-white bg-black bg-opacity-80 px-3 py-1 rounded shadow-lg transition-all duration-300 animate-fade-in">
+    Remonter
+  </div>
+</div>
+
+<footer class="bg-gray-900 border-t border-gray-700 mt-auto animate-fade-in px-6 pt-12 pb-8 text-sm text-gray-400">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-10">
+  
+    <!-- Branding -->
+    <div>
+      <h3 class="font-semibold text-white text-base mb-3">Project : Delta</h3>
+      <p class="text-gray-500 leading-relaxed">
+        Un bot Discord de gestion complet, puissant et personnalisable, lancé en 2025.
+      </p>
+    </div>
+  
+    <!-- Navigation -->
+    <div class="border-l border-gray-700 pl-6">
+      <h3 class="font-semibold text-white text-base mb-3">Navigation</h3>
+      <ul class="space-y-2">
+        <li><a href="./index.html" class="hover:text-indigo-400 transition-colors duration-200">Accueil</a></li>
+        <li><a href="./fonctionnalites.html" class="hover:text-indigo-400 transition-colors duration-200">Fonctionnalités</a></li>
+        <li><a href="./equipe.html" class="hover:text-indigo-400 transition-colors duration-200">Équipe</a></li>
+      </ul>
+    </div>
+
+<!-- Documentation -->
+<div class="border-l border-gray-700 pl-6">
+  <h3 class="font-semibold text-white text-base mb-3">Documentation</h3>
+  <ul class="space-y-2">
+    <li><a href="./support.html" class="hover:text-indigo-400 transition-colors duration-200">Support</a></li>
+    <li><a href="./faq.html" class="hover:text-indigo-400 transition-colors duration-200">FAQ</a></li>
+    <li><a href="./premium.html" class="hover:text-indigo-400 transition-colors duration-200">Premium</a></li>
+  </ul>
+</div>
+  
+<!-- Legal -->
+<div class="border-l border-gray-700 pl-6">
+  <h3 class="font-semibold text-white text-base mb-3">Légal</h3>
+  <ul class="space-y-2">
+    <li><a href="./mentions-legales.html" class="hover:text-indigo-400 transition-colors duration-200">Mentions légales</a></li>
+    <li><a href="./politique-confidentialite.html" class="hover:text-indigo-400 transition-colors duration-200">Politique de confidentialité</a></li>
+    <li><a href="./cgu-cgv.html" class="hover:text-indigo-400 transition-colors duration-200">Conditions d'utilisation</a></li>
+  </ul>
+</div>
+
+<!-- Crédits -->
+<div class="border-l border-gray-700 pl-6">
+  <h3 class="font-semibold text-white text-base mb-3">Crédits</h3>
+  <ul class="space-y-2">
+    <li><a href="./credits.html" class="hover:text-indigo-400 transition-colors duration-200">Crédits</a></li>
+    <li><a href="./bump.html" class="hover:text-indigo-400 transition-colors duration-200">Serveurs Bump</a></li>
+    <li><a href="./collaborateurs.html" class="hover:text-indigo-400 transition-colors duration-200">Collaborateurs</a></li>
+  </ul>
+</div>
+
+<!-- Contact & Réseaux -->
+<div>
+  <div class="border-l border-gray-700 pl-6">
+    <h3 class="font-semibold text-white text-base mb-3">Contact</h3>
+    <p>
+      <a href="" class="hover:text-indigo-400 transition-colors duration-200">
+        contact.project.delta@gmail.com
+      </a>
+    </p>
+
+    <!-- GRID au lieu de FLEX -->
+    <div class="grid grid-cols-3 gap-4 mt-4">
+      <a href="https://discord.gg/rWuWu8YyZA" target="_blank" aria-label="Serveur Discord" class="hover:scale-110 transform transition duration-300">
+        <img src="https://i.pinimg.com/736x/5a/dc/86/5adc86fedf90debb35e5058c52d48879.jpg" alt="Discord" class="w-9 h-9 rounded-full shadow-md object-cover mx-auto">
+      </a>
+      <a href="https://www.instagram.com/delta.projet/?next=%2F" target="_blank" aria-label="Page Instagram" class="hover:scale-110 transform transition duration-300">
+        <img src="https://i.pinimg.com/736x/7e/76/7f/7e767fe360fe2a528c8feb3cd6a7ed19.jpg" alt="Instagram" class="w-9 h-9 rounded-full shadow-md object-cover mx-auto">
+      </a>
+      <a href="https://x.com/Delta_Proj_Isey" target="_blank" aria-label="Profil Twitter" class="hover:scale-110 transform transition duration-300">
+        <img src="https://i.pinimg.com/736x/cc/31/6f/cc316f97197528e5e26e613a93ab16a4.jpg" alt="X" class="w-9 h-9 rounded-full shadow-md object-cover mx-auto">
+      </a>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+  <!-- Copyright en pleine largeur -->
+  <div class="mt-10 border-t border-gray-700 pt-4 text-center text-sm text-gray-500">
+    © 2025 <span class="font-medium text-white">Project : Delta</span>. Tous droits réservés. <br class="sm:hidden" />
+    Ce site n'est pas affilié à Discord Inc.
+  </div>
+</footer>
+
+<script>
+  // Init du carrousel Swiper
+  new Swiper('.swiper-container', {
+    loop: true,
+    autoplay: {
+      delay: 3500,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+
+  // Script pour la FAQ (une seule ouverte à la fois)
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('i');
+      const isOpen = !answer.classList.contains('hidden');
+
+      // Fermer toutes les réponses
+      document.querySelectorAll('.faq-answer').forEach(a => {
+        a.classList.add('hidden');
+        a.previousElementSibling.querySelector('i').classList.remove('rotate-180');
+      });
+
+      // Ouvrir celle cliquée si elle n'était pas déjà ouverte
+      if (!isOpen) {
+        answer.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      }
+    });
+  });
+
+  // Animation de chargement (loader)
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    if (loader) {
+      loader.style.opacity = 0;
+      setTimeout(() => loader.remove(), 500);
+    }
+  });
+
+  // Menu mobile (toggle)
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+    window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollToTopBtn.classList.remove('hidden');
+      setTimeout(() => {
+        scrollToTopBtn.classList.add('opacity-100', 'scale-100');
+      }, 10);
+    } else {
+      scrollToTopBtn.classList.remove('opacity-100', 'scale-100');
+      setTimeout(() => {
+        if (window.scrollY <= 300) {
+          scrollToTopBtn.classList.add('hidden');
+        }
+      }, 300);
+    }
+  });
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // ✅ Bonus UX : vibration légère sur mobile
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+</script>
+</body>
+</html>
