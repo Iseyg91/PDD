@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Project : Delta</title>
+  <link rel="icon" href="/assets/delta-icon.png" type="image/png" />
+  <link rel="icon" href="/assets/delta-icon.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden; /* Empêche le scroll horizontal */
+    }
+    /* Animation fade-in-up */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* Nouvelle animation glow (aura divine pulsante) */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Effet de lueur lente (pour icône, contours, etc.) */
+.glow {
+  animation: glow 6s ease-in-out infinite;
+}
+
+/* Animation flicker (flamme instable) */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.3;
+  }
+}
+
+/* Classe pour effet de scintillement */
+.flicker {
+  animation: flicker 3s infinite;
+}
+
+/* Shine animé (effet de lumière glissant) */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.shine {
+  animation: shine 2s linear infinite;
+}
+
+/* Pulse rapide pour halos ou fond dynamique */
+@keyframes pulseFast {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+.pulse-fast {
+  animation: pulseFast 1.5s infinite;
+}
+
+/* Animation fade classique */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes core-glow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+@keyframes prismatic {
+  0% {
+    transform: rotate(0deg);
+    border-color: rgba(255,255,255,0.15);
+  }
+  100% {
+    transform: rotate(360deg);
+    border-color: rgba(255,255,255,0.25);
+  }
+}
+
+.animate-floating {
+  animation: floating 4s ease-in-out infinite;
+}
+.animate-core-glow {
+  animation: core-glow 3s ease-in-out infinite;
+}
+.animate-prismatic {
+  animation: prismatic 10s linear infinite;
+  border-radius: 9999px;
+}
+
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            fadeIn: { "0%": { opacity: 0 }, "100%": { opacity: 1 } },
+            accordion: {
+              '0%': { height: '0px', opacity: 0 },
+              '100%': { height: 'var(--faq-content-height)', opacity: 1 }
+            }
+          },
+          animation: {
+            fadeIn: "fadeIn 0.5s ease-in-out",
+            accordion: "accordion 0.3s ease-in-out",
+          },
+          colors: {
+            primary: '#6366f1',
+            secondary: '#8b5cf6'
+          }
+        }
+      }
+    };
+    
+  </script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen font-sans">
+<!-- Navigation -->
+<nav class="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40 shadow-md">
+  <div class="text-2xl font-bold text-indigo-400 animate-pulse">Project : Delta</div>
+  <button class="text-3xl text-gray-300 md:hidden focus:outline-none" id="burger">☰</button>
+  <ul id="menu" class="hidden md:flex space-x-6 text-sm font-medium text-gray-300 items-center">
+    <li>
+      <a href="./documentation.html"
+         class="bg-gray-800 hover:bg-gray-700 text-white font-medium px-4 py-2 rounded-lg shadow transition duration-300">
+        Documentation & Infos
+      </a>
+    </li>
+    <li>
+      <a href="https://discord.com/oauth2/authorize?client_id=1356693934012891176"
+         class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg shadow transition duration-300">
+        Inviter le bot
+      </a>
+    </li>
+    <li>
+      <a href="./premium.html"
+         class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-white font-semibold px-4 py-2 rounded-lg shadow-lg transition duration-300">
+        Premium
+      </a>
+    </li>
+  </ul>
+</nav>
+<a href="./index.html"
+   aria-label="Retour à l'accueil"
+   class="fixed bottom-6 left-6 z-50 group inline-flex items-center gap-3 px-6 py-3 rounded-full text-white font-semibold shadow-xl backdrop-blur-xl backdrop-saturate-200 bg-opacity-80 transition-all duration-500 ease-in-out hover:scale-[1.12] active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-purple-500 ring-offset-2 ring-offset-gray-900 text-sm md:text-base overflow-hidden animate-fade-in animate-floating bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700">
+
+  <!-- Halo cosmique flottant -->
+  <span aria-hidden="true"
+        class="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 blur-2xl opacity-25 group-hover:opacity-40 transition duration-700 animate-pulse-fast pointer-events-none">
+  </span>
+
+  <!-- Reflet prismatique tournant -->
+  <span aria-hidden="true"
+        class="absolute inset-0 rounded-full border border-white/20 animate-prismatic pointer-events-none">
+  </span>
+
+  <!-- Cœur énergétique pulsant -->
+  <span aria-hidden="true"
+        class="absolute left-1/2 top-1/2 w-16 h-16 bg-white/10 rounded-full blur-xl opacity-30 animate-core-glow pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0">
+  </span>
+
+  <!-- Shine céleste -->
+  <span aria-hidden="true"
+        class="absolute left-[-75%] top-0 w-[150%] h-full bg-white/10 transform rotate-12 group-hover:animate-shine pointer-events-none">
+  </span>
+
+  <!-- Icône -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       class="relative z-10 h-6 w-6 text-white drop-shadow-lg animate-flicker transition-transform duration-300 ease-in-out group-hover:-translate-y-1 group-hover:scale-110 group-active:scale-90"
+       fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5M4.5 10.5V20h15v-9.5" />
+  </svg>
+
+  <!-- Texte -->
+  <span class="relative z-10 hidden sm:inline">Accueil</span>
+
+  <!-- Tooltip -->
+  <span aria-hidden="true"
+        class="absolute -top-11 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-3 py-1 rounded-md shadow-lg opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none z-20">
+    Retour à l'accueil
+  </span>
+</a>
+  <!-- Main -->
+  <main class="pt-24 px-4 max-w-5xl mx-auto animate-fadeIn">
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-center bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent mb-10">
+      FAQ — Project : Delta
+    </h1>
+
+    <!-- Tabs -->
+    <nav class="flex justify-center flex-wrap gap-3 mb-8">
+      <button class="category-tab px-4 py-2 bg-primary text-white rounded-full hover:bg-secondary transition" data-category="general">Général</button>
+      <button class="category-tab px-4 py-2 bg-primary text-white rounded-full hover:bg-secondary transition" data-category="commandes">Commandes</button>
+      <button class="category-tab px-4 py-2 bg-primary text-white rounded-full hover:bg-secondary transition" data-category="modération">Modération</button>
+      <button class="category-tab px-4 py-2 bg-primary text-white rounded-full hover:bg-secondary transition" data-category="gestion">Gestion</button>
+      <button class="category-tab px-4 py-2 bg-primary text-white rounded-full hover:bg-secondary transition" data-category="bugs">Fun</button>
+    </nav>
+
+    <!-- Search -->
+    <div class="mb-8">
+      <input id="searchInput" type="text" placeholder="Rechercher une question..." class="w-full px-5 py-3 rounded-xl bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+    </div>
+
+    <!-- FAQ Section -->
+    <section id="faq-list" class="space-y-4 transition-all duration-300"></section>
+
+    <!-- Scroll to Top Button Container -->
+<div class="group fixed bottom-6 right-6 z-50">
+  <button id="scrollToTopBtn"
+    onclick="scrollToTop()"
+    class="hidden opacity-0 scale-90 transition-all duration-300 ease-in-out 
+    bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 
+    hover:from-purple-500 hover:to-indigo-600 
+    text-white p-5 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.6)] 
+    text-3xl transform hover:scale-110 hover:rotate-6 focus:outline-none">
+    
+    <i class="fas fa-arrow-up transition-transform duration-300 group-hover:rotate-180"></i>
+    <span class="sr-only">Remonter en haut</span>
+  </button>
+
+  <!-- Tooltip -->
+  <div class="absolute bottom-full mb-2 hidden group-hover:block text-sm font-medium 
+  text-white bg-black bg-opacity-80 px-3 py-1 rounded shadow-lg transition-all duration-300 animate-fade-in">
+    Remonter
+  </div>
+</div>
+
+  </main>
+
+<footer class="bg-gray-900 border-t border-gray-700 mt-auto animate-fade-in px-6 pt-12 pb-8 text-sm text-gray-400">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-10">
+  
+    <!-- Branding -->
+    <div>
+      <h3 class="font-semibold text-white text-base mb-3">Project : Delta</h3>
+      <p class="text-gray-500 leading-relaxed">
+        Un bot Discord de gestion complet, puissant et personnalisable, lancé en 2025.
+      </p>
+    </div>
+  
+    <!-- Navigation -->
+    <div class="border-l border-gray-700 pl-6">
+      <h3 class="font-semibold text-white text-base mb-3">Navigation</h3>
+      <ul class="space-y-2">
+        <li><a href="./index.html" class="hover:text-indigo-400 transition-colors duration-200">Accueil</a></li>
+        <li><a href="./fonctionnalites.html" class="hover:text-indigo-400 transition-colors duration-200">Fonctionnalités</a></li>
+        <li><a href="./equipe.html" class="hover:text-indigo-400 transition-colors duration-200">Équipe</a></li>
+        <li><a href="./avis.html" class="hover:text-indigo-400 transition-colors duration-200">Avis</a></li>
+      </ul>
+    </div>
+
+<!-- Documentation -->
+<div class="border-l border-gray-700 pl-6">
+  <h3 class="font-semibold text-white text-base mb-3">Documentation</h3>
+  <ul class="space-y-2">
+    <li><a href="./support.html" class="hover:text-indigo-400 transition-colors duration-200">Support</a></li>
+    <li><a href="./faq.html" class="hover:text-indigo-400 transition-colors duration-200">FAQ</a></li>
+    <li><a href="./premium.html" class="hover:text-indigo-400 transition-colors duration-200">Premium</a></li>
+    <li><a href="./contact.html" class="hover:text-indigo-400 transition-colors duration-200">Contact</a></li>
+  </ul>
+</div>
+  
+<!-- Legal -->
+<div class="border-l border-gray-700 pl-6">
+  <h3 class="font-semibold text-white text-base mb-3">Légal</h3>
+  <ul class="space-y-2">
+    <li><a href="./mentions-legales.html" class="hover:text-indigo-400 transition-colors duration-200">Mentions légales</a></li>
+    <li><a href="./politique-confidentialite.html" class="hover:text-indigo-400 transition-colors duration-200">Politique de confidentialité</a></li>
+    <li><a href="./cgu-cgv.html" class="hover:text-indigo-400 transition-colors duration-200">Conditions d'utilisation</a></li>
+  </ul>
+</div>
+
+<!-- Crédits -->
+<div class="border-l border-gray-700 pl-6">
+  <h3 class="font-semibold text-white text-base mb-3">Crédits</h3>
+  <ul class="space-y-2">
+    <li><a href="./credits.html" class="hover:text-indigo-400 transition-colors duration-200">Crédits</a></li>
+    <li><a href="./bump.html" class="hover:text-indigo-400 transition-colors duration-200">Serveurs Bump</a></li>
+    <li><a href="./collaborateurs.html" class="hover:text-indigo-400 transition-colors duration-200">Collaborateurs</a></li>
+  </ul>
+</div>
+
+<!-- Contact & Réseaux -->
+<div>
+  <div class="border-l border-gray-700 pl-6">
+    <h3 class="font-semibold text-white text-base mb-3">Contact</h3>
+    <p>
+      <a href="" class="hover:text-indigo-400 transition-colors duration-200">
+        contact.project.delta@gmail.com
+      </a>
+    </p>
+
+    <!-- GRID au lieu de FLEX -->
+    <div class="grid grid-cols-3 gap-4 mt-4">
+      <a href="https://discord.gg/rWuWu8YyZA" target="_blank" aria-label="Serveur Discord" class="hover:scale-110 transform transition duration-300">
+        <img src="https://i.pinimg.com/736x/5a/dc/86/5adc86fedf90debb35e5058c52d48879.jpg" alt="Discord" class="w-9 h-9 rounded-full shadow-md object-cover mx-auto">
+      </a>
+      <a href="https://www.instagram.com/delta.projet/?next=%2F" target="_blank" aria-label="Page Instagram" class="hover:scale-110 transform transition duration-300">
+        <img src="https://i.pinimg.com/736x/7e/76/7f/7e767fe360fe2a528c8feb3cd6a7ed19.jpg" alt="Instagram" class="w-9 h-9 rounded-full shadow-md object-cover mx-auto">
+      </a>
+      <a href="https://x.com/Delta_Proj_Isey" target="_blank" aria-label="Profil Twitter" class="hover:scale-110 transform transition duration-300">
+        <img src="https://i.pinimg.com/736x/cc/31/6f/cc316f97197528e5e26e613a93ab16a4.jpg" alt="X" class="w-9 h-9 rounded-full shadow-md object-cover mx-auto">
+      </a>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+  <!-- Copyright en pleine largeur -->
+  <div class="mt-10 border-t border-gray-700 pt-4 text-center text-sm text-gray-500">
+    © 2025 <span class="font-medium text-white">Project : Delta</span>. Tous droits réservés. <br class="sm:hidden" />
+    Ce site n'est pas affilié à Discord Inc.
+  </div>
+</footer>
+
+  <script>
+    const questions = {
+      general: [
+    { q: "Comment ajouter le bot à mon serveur ?", a: "Utilisez le lien d'invitation sur la page d’accueil ou la page officielle du bot." },
+    { q: "Est-ce que Project : Delta est gratuit ?", a: "Oui, toutes les fonctionnalités de base sont gratuites. Cependant des bonus premium existe." },
+    { q: "Le bot est-il disponible 24/7 ?", a: "Oui, Project : Delta est hébergé en continu pour garantir une disponibilité maximale." },
+    { q: "Que faire si le bot ne répond plus ?", a: "Vérifiez s’il est en ligne. Sinon, contactez le support via le serveur officiel ou attendez la prochaine relance automatique." },
+    { q: "Le bot collecte-t-il des données personnelles ?", a: "Non, Project : Delta respecte votre vie privée et ne collecte que les données nécessaires à son fonctionnement." },
+    { q: "Est-ce que le bot supporte plusieurs langues ?", a: "Actuellement, le bot est disponible en français. D'autres langues pourraient être ajoutées bientôt." },
+    { q: "Puis-je désactiver certaines fonctionnalités du bot ?", a: "Oui, plusieurs commandes permettent d'activer ou désactiver des modules selon vos besoins." },
+    { q: "Comment signaler un bug ou une erreur ?", a: "Utilisez la commande /feedback ou contactez le staff via le serveur support." },
+    { q: "Puis-je personnaliser les messages du bot ?", a: "Oui, certaines commandes permettent de modifier les messages envoyés par le bot tel que +say ou encore /embed" },
+    { q: "Le bot fonctionne-t-il avec les permissions Discord ?", a: "Oui, il respecte les permissions et ne peut agir que dans les limites autorisées." },
+    { q: "Comment connaître les nouveautés du bot ?", a: "Consultez le salon 'MailBox' sur le serveur support pour suivre les updates." },
+    { q: "Combien de serveurs utilisent Project : Delta ?", a: "Le nombre exact est affiché sur la page d’accueil." },
+    { q: "Comment soutenir le développement du bot ?", a: "Vous pouvez faire un don, promouvoir le bot ou souscrire à un éventuel abonnement premium." },
+    { q: "Project : Delta peut-il gérer les rôles ?", a: "Oui, il peut gérer automatiquement les rôles selon vos paramètres." },
+    { q: "Est-ce que le bot est compatible avec les serveurs communautaires ?", a: "Oui, il est conçu pour s'adapter à tous les types de serveurs." },
+    { q: "Existe-t-il une documentation complète ?", a: "Oui, une documentation détaillée est accessible depuis le dashboard officiel." },
+    { q: "Qui développe Project : Delta ?", a: "Le bot est développé par Isey, étudiant passionné et créateur de plusieurs outils Discord." },
+    { q: "Puis-je proposer des idées de fonctionnalités ?", a: "Oui, vous pouvez les soumettre via le serveur support ou encore la commande /feedback." },
+    { q: "Le bot est-il sécurisé ?", a: "Oui, le code est conçu pour éviter toute vulnérabilité connue et respecter les bonnes pratiques." },
+    { q: "Combien de commandes propose Project : Delta ?", a: "Le nombre varie selon les modules activés, mais plus de 50 commandes sont disponibles." },
+    { q: "Comment désinstaller le bot ?", a: "Vous pouvez simplement le retirer de votre serveur via Discord." },
+    { q: "Le bot fonctionne-t-il sur mobile ?", a: "Oui, toutes les interactions via commandes fonctionnent aussi sur mobile." },
+    { q: "Un système de suggestions communautaires est-il prévu ?", a: "Oui, un système participatif est en place pour voter et proposer de nouvelles idées." },
+    { q: "Peut-on promouvoir notre serveur sur le dashboard ?", a: "Oui, il est possible de faire apparaître votre serveur dans la section promotion du dashboard. Pour connaître les conditions et soumettre une demande, veuillez passer par le serveur support." }
+      ],
+      commandes: [
+    { q: "Comment utiliser la commande +help ?", a: "Tapez +help pour obtenir la liste des commandes classées par catégorie." },
+    { q: "Comment créer un giveaway ?", a: "Utilisez la commande /g-create pour créer un giveaway." },
+    { q: "Comment lancer une configuration initiale du bot ?", a: "Utilisez la commande /setup pour configurer le bot sur votre serveur." },
+    { q: "Comment activer ou désactiver des protections automatiques ?", a: "Utilisez la commande /set-sensible pour activer ou désactiver les catégories de mots sensibles surveillés." },
+    { q: "Comment ajouter un utilisateur à la whitelist ?", a: "Utilisez la commande +addwl pour ignorer un membre des protections automatiques." },
+    { q: "Comment retirer un membre de la whitelist ?", a: "Utilisez la commande +removewl pour le rendre à nouveau sujet aux protections du bot." },
+    { q: "Comment voir qui est dans la whitelist ?", a: "Utilisez la commande +listwl pour afficher tous les membres actuellement whitelistés." },
+    { q: "Comment supprimer des messages rapidement ?", a: "Utilisez la commande +clear suivie du nombre de messages à supprimer (entre 2 et 100)." },
+    { q: "Comment réinitialiser un salon ?", a: "Utilisez la commande +nuke pour supprimer tous les messages d’un salon (⚠️ irréversible)." },
+    { q: "Comment attribuer un rôle à un membre ?", a: "Utilisez la commande +addrole en mentionnant l’utilisateur et le rôle." },
+    { q: "Comment retirer un rôle à un utilisateur ?", a: "Utilisez la commande +delrole en mentionnant l’utilisateur et le rôle." },
+    { q: "Comment créer un embed personnalisé ?", a: "Utilisez la commande /embed pour créer un embed avec texte, images, etc." },
+    { q: "Comment voir les membres bannis ?", a: "Utilisez la commande +listban pour consulter tous les membres bannis." },
+    { q: "Comment débannir tout le monde ?", a: "Utilisez la commande +unbanall pour lever tous les bannissements d’un coup." },
+    { q: "Comment activer un code premium ?", a: "Utilisez la commande /premium pour activer un code et bénéficier des avantages premium." },
+    { q: "Comment voir les serveurs premium ?", a: "Utilisez la commande /viewpremium pour voir quels serveurs bénéficient des fonctions premium." },
+    { q: "Comment obtenir des infos sur le premium ?", a: "Utilisez la commande /devenirpremium pour en savoir plus sur les avantages premium." },
+    { q: "Comment signaler une situation au staff ?", a: "Utilisez la commande /urgence <raison> pour notifier une situation de crise." },
+    { q: "Comment consulter le ping du bot ?", a: "Utilisez la commande +ping pour voir la latence actuelle du bot." },
+    { q: "Comment savoir depuis combien de temps le bot est en ligne ?", a: "Utilisez la commande +uptime pour afficher le temps de fonctionnement." },
+    { q: "Comment voir les infos d’un rôle ?", a: "Utilisez la commande /rôle info <nom_du_rôle> pour avoir les détails d’un rôle." },
+    { q: "Comment proposer une idée pour le serveur ou le bot ?", a: "Utilisez la commande /suggestion pour envoyer votre suggestion." },
+    { q: "Comment envoyer un sondage au serveur ?", a: "Utilisez la commande /sondage pour créer un sondage personnalisé." },
+    { q: "Qui peut utiliser les commandes +shutdown ou +restart ?", a: "Seul le propriétaire du bot (Isey) peut utiliser les commandes comme +shutdown ou +restart." }
+      ],
+      modération: [
+  { q: "Comment activer l’anti-insultes ?", a: "Utilisez la commande /set-sensible pour activer ou désactiver les filtres par catégorie." },
+  { q: "Comment fonctionne la détection de mots sensibles ?", a: "Le bot analyse les messages et détecte automatiquement les mots interdits selon les catégories activées." },
+  { q: "Comment activer ou désactiver certaines catégories ?", a: "La commande /set-sensible permet d’activer ou désactiver les catégories comme insultes, haine, NSFW, etc." },
+  { q: "Est-ce que je peux personnaliser les mots filtrés ?", a: "Non, les mots sont gérés globalement par le bot pour une efficacité maximale." },
+  { q: "Le bot supprime-t-il automatiquement les messages interdits ?", a: "Oui, dès qu’un mot sensible est détecté, le message est supprimé automatiquement." },
+  { q: "Le bot alerte-t-il quelqu’un quand un mot interdit est détecté ?", a: "Oui, une alerte est envoyée au propriétaire du serveur ou dans un salon configuré." },
+  { q: "Comment désactiver entièrement la modération automatique ?", a: "Utilisez /set-sensible et désactivez toutes les catégories une par une." },
+  { q: "Que fait l’anti-lien ?", a: "Il supprime automatiquement les messages contenant des liens non autorisés." },
+  { q: "Puis-je autoriser certains liens ?", a: "Oui, les liens Discord (comme les invitations) peuvent être autorisés via les paramètres du bot." },
+  { q: "Comment fonctionne l’anti-spam ?", a: "Il détecte les messages répétés, les floods ou les messages trop rapides, et agit en conséquence." },
+  { q: "Que fait l’anti-everyone ?", a: "Il empêche l’abus de @everyone et @here, sauf si l’utilisateur est autorisé." },
+  { q: "Comment voir qui est dans la whitelist ?", a: "La commande +listwl affiche les utilisateurs protégés des systèmes de modération." },
+  { q: "Comment ajouter un membre à la whitelist ?", a: "Utilisez la commande +addwl pour exclure un utilisateur des vérifications automatiques." },
+  { q: "Comment retirer un membre de la whitelist ?", a: "Utilisez la commande +removewl pour le rendre à nouveau soumis aux filtres." },
+  { q: "Que fait l’anti-bad-username ?", a: "Il renomme automatiquement les utilisateurs ayant un pseudo offensant ou perturbateur." },
+  { q: "Puis-je voir l’historique des alertes ?", a: "Non, mais les alertes sont envoyées en direct au serveur support." },
+  { q: "Comment fonctionne l’anti-pub ?", a: "Il bloque les messages contenant des liens ou du contenu promotionnel vers d'autres serveurs." },
+  { q: "Comment empêcher les auto-mentions du bot ?", a: "Le bot répond automatiquement si on le mentionne, malheuresement pour l'instant on ne peux le desactiver." },
+  { q: "Puis-je bannir automatiquement à la détection d’un mot ?", a: "Non, pour éviter les abus. Le bot se limite à des suppressions et alertes." },
+  { q: "Le bot filtre-t-il les messages privés ?", a: "Non, les protections s’appliquent uniquement aux serveurs." },
+  { q: "Le système est-il mis à jour automatiquement ?", a: "Oui, les listes de mots et protections sont mises à jour sans action manuelle." },
+  { q: "Comment configurer les salons ignorés ?", a: "Actuellement, la fonctionnalité d’ignorer certains salons n’est pas disponible." },
+  { q: "Puis-je voir un aperçu des filtres actifs ?", a: "Oui, utilisez /set-sensible pour voir quelles catégories sont actives ou non." }
+      ],
+      gestion: [
+        { q: "Comment voir les statistiques du serveur ?", a: "Utilisez la commande +vc pour obtenir les infos générales de votre serveur." },
+        { q: "Comment supprimer rapidement plusieurs messages ?", a: "Utilisez la commande +clear suivie du nombre de messages à supprimer (entre 2 et 100)." },
+        { q: "Comment réinitialiser un salon texte ?", a: "Utilisez la commande +nuke pour effacer entièrement le salon et le recréer proprement." },
+        { q: "Comment ajouter un rôle à un membre ?", a: "La commande +addrole @utilisateur @rôle permet d’attribuer un rôle à un utilisateur." },
+        { q: "Comment retirer un rôle à un utilisateur ?", a: "Utilisez +delrole @utilisateur @rôle pour lui retirer le rôle en question." },
+        { q: "Comment créer un message personnalisé avec un embed ?", a: "Utilisez la commande /embed pour générer des embeds stylisés avec textes, images et couleurs." },
+        { q: "Comment afficher les membres bannis du serveur ?", a: "La commande +listban vous montre tous les utilisateurs bannis." },
+        { q: "Comment débannir tous les membres en une fois ?", a: "La commande +unbanall permet de lever tous les bannissements d’un coup." },
+        { q: "Comment créer un concours ou giveaway ?", a: "Utilisez /g-create pour lancer un tirage au sort avec une durée, un lot et des conditions." },
+        { q: "Comment faire un giveaway rapide ?", a: "La commande /g-fast permet d’organiser un mini-concours avec réaction rapide." },
+        { q: "Comment activer les protections anti-raid ?", a: "Utilisez /protection pour configurer les systèmes anti-raid du bot selon vos besoins." },
+        { q: "Comment entrer un code premium pour le serveur ?", a: "Utilisez /premium pour activer votre accès premium avec un code valide." },
+        { q: "Comment consulter les serveurs avec premium actif ?", a: "La commande /viewpremium vous permet de voir tous les serveurs bénéficiant des privilèges premium." },
+        { q: "Comment devenir membre premium ?", a: "Utilisez /devenirpremium pour en savoir plus sur les avantages et comment les débloquer." },
+        { q: "Puis-je supprimer un message automatiquement après un certain délai ?", a: "Non, cette fonction n'est pas encore disponible, mais elle est prévue dans les prochaines versions !" },
+        { q: "Puis-je recevoir un log lorsqu’un rôle est modifié ?", a: "Ce système est prévu via les logs. Activez les logs dans la configuration du bot (/setup) pour suivre ce type d’action." },
+        { q: "Peut-on automatiser l’attribution de rôles ?", a: "Oui, via des systèmes à venir. Pour l’instant, les rôles peuvent être attribués manuellement avec +addrole." },
+        { q: "Comment empêcher les membres d’envoyer des liens ?", a: "Activez le filtre anti-lien avec /protection, dans la catégorie appropriée." },
+        { q: "Comment gérer la whitelist d’utilisateurs ?", a: "Utilisez +addwl pour ajouter un membre à la whitelist, +removewl pour l’enlever, et +listwl pour voir la liste complète." },
+        { q: "Comment afficher la liste des administrateurs du serveur ?", a: "Utilisez +alladmin pour obtenir une vue rapide de tous les admins actuels." },
+        { q: "Comment récupérer un message supprimé ?", a: "La commande +snipe permet de voir le dernier message supprimé dans le salon." },
+        { q: "Comment savoir depuis combien de temps le bot est en ligne ?", a: "Utilisez la commande +uptime pour obtenir cette info." },
+        { q: "Le bot propose-t-il un système de suggestions ?", a: "Oui ! La commande /suggestion permet aux membres de proposer des idées." },
+        { q: "Puis-je voir la latence du bot ?", a: "Bien sûr ! Utilisez la commande +ping pour afficher la latence actuelle en ms." }
+      ],
+      bugs: [  
+        { q: "+blague", a: "Envoie une blague aléatoire, comme 'Pourquoi les plongeurs plongent toujours en arrière et jamais en avant ? Parce que sinon ils tombent dans le bateau !'" },
+        { q: "+coinflip", a: "Lancez une pièce pour voir si vous gagnez ! Tentez votre chance et découvrez si vous avez un coup de chance." },
+        { q: "+say", a: "Faites dire quelque chose au bot à la place de vous ! Lancez votre message et il sera annoncé à tout le serveur !" },
+        { q: "+gay @user", a: "Détermine le taux de gayitude d'un utilisateur. Testez votre ouverture d'esprit !" },
+        { q: "+racist @user", a: "Détermine le taux de racisme d'un utilisateur. Un test amusant à faire avec vos amis." },
+        { q: "+love @user", a: "Affiche le niveau de compatibilité amoureuse. Testez votre compatibilité avec quelqu’un !" },
+        { q: "+rat @user", a: "Détermine le taux de ratitude d’un utilisateur. Vérifiez qui est le plus ‘rat’ parmi vos amis." },
+        { q: "+zizi @user", a: "Évalue le niveau de zizi de l’utilisateur. Un test ludique pour voir qui a le plus grand ego !" },
+        { q: "+con @user", a: "Détermine le taux de connerie d’un utilisateur. Un test amusant à faire avec vos amis." },
+        { q: "+fou @user", a: "Détermine le taux de folie d’un utilisateur. Testez l’état mental de vos amis !" },
+        { q: "+testo @user", a: "Détermine le taux de testostérone d’un utilisateur. Testez la virilité de vos amis !" },
+        { q: "+libido @user", a: "Détermine le taux de libido d’un utilisateur. Testez la chaleur de vos amis sous la couette !" },
+        { q: "+reverse [texte]", a: "Inverse un texte et le partage avec un autre utilisateur ! Lancez un défi d’inversion !" },
+        { q: "+note @user [note sur 10]", a: "Notez un autre utilisateur sur 10 ! Exprimez votre avis sur leur comportement." },
+        { q: "+roll", a: "Lance un dé pour générer un nombre aléatoire entre 1 et 500. Essayez votre chance !" },
+        { q: "+fight @user", a: "Lancez un duel avec un autre utilisateur ! Découvrez qui sera le champion du serveur." },
+        { q: "+superpouvoir @user", a: "Déclenche un super-pouvoir épique pour un utilisateur ! Résultat entre cool et débile." },
+        { q: "+totem @user", a: "Découvrez votre animal totem spirituel ! D’un loup protecteur à un poisson rouge distrait." },
+        { q: "+futur @user", a: "Prédit l’avenir d’un utilisateur de manière totalement farfelue ! Soyez prêt au délire." },
+        { q: "+enfant @user @user", a: "Crée un enfant aléatoire entre deux utilisateurs. Résultat fun et surprenant !" },
+        { q: "+sucre", a: "Affiche le taux de glycémie du membre ciblé 🍭. Un indicateur sucré pour le fun !" }
+      ]
+    };
+
+    let currentCategory = "general";
+
+    function renderFAQ(category, filter = "") {
+      const container = document.getElementById("faq-list");
+      container.innerHTML = "";
+      questions[category].forEach(({ q, a }) => {
+        if (q.toLowerCase().includes(filter.toLowerCase())) {
+          const item = document.createElement("div");
+          item.className = "faq-item bg-gray-800/60 border border-gray-700 rounded-2xl p-4 shadow-md";
+
+          item.innerHTML = `
+            <button class="w-full flex justify-between items-center text-left text-lg font-semibold text-indigo-300 hover:underline focus:outline-none">
+              <span>${q}</span>
+              <svg class="w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="faq-content hidden mt-3 text-gray-300 transition-opacity duration-300">${a}</div>
+          `;
+
+          const button = item.querySelector("button");
+          const icon = item.querySelector("svg");
+          const content = item.querySelector(".faq-content");
+
+          button.addEventListener("click", () => {
+            const open = !content.classList.contains("hidden");
+            document.querySelectorAll(".faq-content").forEach(el => el.classList.add("hidden"));
+            document.querySelectorAll(".faq-item svg").forEach(el => el.classList.remove("rotate-180"));
+
+            if (!open) {
+              content.classList.remove("hidden");
+              icon.classList.add("rotate-180");
+            }
+          });
+
+          container.appendChild(item);
+        }
+      });
+    }
+
+    document.querySelectorAll(".category-tab").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".category-tab").forEach(tab => tab.classList.remove("bg-indigo-700"));
+        btn.classList.add("bg-indigo-700");
+        currentCategory = btn.dataset.category;
+        renderFAQ(currentCategory, document.getElementById("searchInput").value);
+      });
+    });
+
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      renderFAQ(currentCategory, e.target.value);
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector('.category-tab[data-category="general"]').classList.add('bg-indigo-700');
+      renderFAQ("general");
+    });
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollToTopBtn.classList.remove('hidden');
+      setTimeout(() => {
+        scrollToTopBtn.classList.add('opacity-100', 'scale-100');
+      }, 10);
+    } else {
+      scrollToTopBtn.classList.remove('opacity-100', 'scale-100');
+      setTimeout(() => {
+        if (window.scrollY <= 300) {
+          scrollToTopBtn.classList.add('hidden');
+        }
+      }, 300);
+    }
+  });
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // ✅ Bonus UX : vibration légère sur mobile
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+  </script>
+</body>
+</html>
