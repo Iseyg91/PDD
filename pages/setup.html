@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Configuration du serveur - Project Delta</title>
+  <link rel="stylesheet" href="../style/main.css" />
+  <script defer src="../scripts/auth.js"></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <!-- Exemple navigation identique aux autres pages -->
+      <a href="index.html">Accueil</a>
+      <a href="serveur.html">Serveur</a>
+      <a href="setup.html" class="active">Configuration</a>
+      <!-- etc. -->
+    </nav>
+  </header>
+
+  <main>
+    <section class="user-auth-section">
+      <h2>Connexion Discord</h2>
+      <button id="discord-login">Se connecter avec Discord</button>
+      <div id="user-info-setup" style="margin-top: 1em;"></div>
+    </section>
+
+    <section class="setup-form-section">
+      <h2>Configuration du serveur</h2>
+      <!-- Ici tu ajoutes ton formulaire ou ton interface de setup serveur -->
+      <form id="setup-form">
+        <!-- Exemple simple -->
+        <label for="prefix">Préfixe :</label>
+        <input type="text" id="prefix" name="prefix" placeholder="!" required />
+
+        <label for="admin_role">Rôle Admin :</label>
+        <input type="text" id="admin_role" name="admin_role" placeholder="Admin" />
+
+        <label for="staff_role">Rôle Staff :</label>
+        <input type="text" id="staff_role" name="staff_role" placeholder="Staff" />
+
+        <button type="submit">Enregistrer</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <!-- Footer commun ou adapté -->
+    <p>&copy; 2025 Project Delta - Tous droits réservés</p>
+  </footer>
+
+  <script>
+    // Ici tu peux ajouter le script JS pour gérer l'envoi du formulaire setup, appel API, etc.
+    document.getElementById("setup-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Récupérer user connecté
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) return alert("Vous devez être connecté avec Discord pour modifier la configuration.");
+
+      const guildId = "ID_DU_SERVEUR"; // à remplacer dynamiquement selon contexte
+
+      const prefix = document.getElementById("prefix").value.trim();
+      const admin_role = document.getElementById("admin_role").value.trim();
+      const staff_role = document.getElementById("staff_role").value.trim();
+
+      const body = { prefix, admin_role, staff_role, owner: user.id };
+
+      try {
+        const res = await fetch(`/api/guild/setup/${guildId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+
+        const data = await res.json();
+        if (data.success) alert("Configuration enregistrée avec succès !");
+        else alert("Erreur : " + data.error);
+      } catch (err) {
+        alert("Erreur lors de l'enregistrement : " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
