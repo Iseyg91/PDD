@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Project : Delta // SYSTEM ███</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    /* RESET + FOND */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #00ffcc;
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+      animation: bodyFadeIn 2s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes bodyFadeIn {
+    to { opacity: 1; }
+    }
+
+    #glitchCanvas, #matrixCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  z-index: 0;
+  pointer-events: none; /* pour que le canvas ne bloque pas les clics */
+}
+
+    .screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    pointer-events: auto; /* important pour permettre l’interaction */
+    }
+
+    .intro {
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      animation: flicker 1.8s infinite;
+      z-index: 3;
+    }
+
+    .terminal {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      border-right: 2px solid #00ffcc;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 5s steps(60, end) forwards;
+      z-index: 3;
+    }
+
+    .code-entry {
+      margin-top: 3rem;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    input {
+      background: #000;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      width: 220px;
+      text-align: center;
+      outline: none;
+    }
+
+    input::placeholder { color: #00ffcc88; }
+
+    #errorMessage {
+      color: #ff0066;
+      margin-top: 1rem;
+      display: none;
+      font-weight: bold;
+    }
+
+    .access-granted {
+      display: none;
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      color: #00ffcc;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .radar {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 250px;
+      height: 250px;
+      margin-left: -125px;
+      margin-top: -125px;
+      border: 2px solid #00ffcc33;
+      border-radius: 50%;
+      animation: spin 5s linear infinite;
+      z-index: 1;
+    }
+
+    #glitchCanvas, #matrixCanvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: transparent;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .scanlines {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: repeating-linear-gradient(to bottom, transparent, transparent 1px, rgba(0,255,204,0.03) 2px);
+      z-index: 1;
+    }
+
+    .scanlines::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 255, 204, 0.1);
+  animation: scanlineMove 5s linear infinite;
+}
+
+@keyframes scanlineMove {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+    .code-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 0.8rem;
+      opacity: 0.3;
+      user-select: none;
+      font-style: italic;
+    }
+
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.3; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .intro, .terminal { font-size: 1rem; }
+      .radar { width: 180px; height: 180px; margin-left: -90px; margin-top: -90px; }
+    }
+
+    .shake {
+      animation: shake 0.4s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @keyframes flicker {
+  0%, 100% { opacity: 1; }
+  5%, 15%, 25% { opacity: 0.4; }
+  10%, 20%, 30% { opacity: 0.8; }
+}
+
+  </style>
+</head>
+<body onkeypress="focusInput(event)">
+  <canvas id="matrixCanvas"></canvas>
+  <canvas id="glitchCanvas"></canvas>
+  <div class="scanlines"></div>
+
+  <div class="screen">
+    <div class="radar" aria-hidden="true"></div>
+    <div class="intro" role="status">[BOOTING NODE › PROJECT : DELTA]</div>
+
+    <div class="terminal" id="terminalText" role="log" aria-live="polite">
+      Initialisation du noyau... Décryptage des logs... Système sécurisé en ligne.
+    </div>
+
+    <div class="code-entry" id="codeEntry">
+      <label for="secretCode">Code d’accès requis :</label>
+      <input
+        type="text"
+        id="secretCode"
+        placeholder="••••••••"
+        onkeydown="checkCode(event)"
+        autocomplete="off"
+        spellcheck="false"
+        aria-describedby="errorMessage"
+      />
+      <div id="errorMessage" style="display: none; color: red;" role="alert">
+        Accès refusé : code non valide.
+      </div>
+    </div>
+
+    <div class="access-granted" id="accessGranted" style="display: none;">
+      Accès autorisé. Redirection dans <span id="countdown">3</span> secondes...
+    </div>
+
+<div class="code-hint">
+<strong>Clé d’indice :</strong> <em>“Son nom commence le projet. Trois lettres codées dans son essence. Un trait d’union. Une inconnue, indéchiffrable sauf pour ceux qui analysent.”</em>
+</div>
+
+  </div>
+</body>
+
+  <audio id="accessSound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3"></audio>
+  <audio id="errorSound" src="https://assets.mixkit.co/sfx/preview/mixkit-interface-failure-beep-229.mp3"></audio>
+
+  <script>
+    const codeEntry = document.getElementById("codeEntry");
+    const granted = document.getElementById("accessGranted");
+    const errorMessage = document.getElementById("errorMessage");
+    const countdownSpan = document.getElementById("countdown");
+    const accessSound = document.getElementById("accessSound");
+    const errorSound = document.getElementById("errorSound");
+
+    setTimeout(() => {
+      codeEntry.style.display = "flex";
+    }, 7000);
+
+    function checkCode(e) {
+      if (e.key === "Enter") {
+        const input = document.getElementById("secretCode");
+        const value = input.value.toLowerCase();
+        if (value === "delta-x") {
+          granted.style.display = "block";
+          codeEntry.style.display = "none";
+          errorMessage.style.display = "none";
+          accessSound.play();
+          let count = 3;
+          const timer = setInterval(() => {
+            count--;
+            countdownSpan.textContent = count;
+            if (count === 0) {
+              clearInterval(timer);
+              window.location.href = "secret.html";
+            }
+          }, 1000);
+        } else {
+          errorSound.play();
+          errorMessage.style.display = "block";
+          input.classList.add("shake");
+          setTimeout(() => {
+            input.classList.remove("shake");
+            window.location.href = "echec.html";
+          }, 1500);
+        }
+      }
+    }
+
+    // GLITCH CANVAS
+    const glitchCanvas = document.getElementById("glitchCanvas");
+    const gctx = glitchCanvas.getContext("2d");
+    glitchCanvas.width = window.innerWidth;
+    glitchCanvas.height = window.innerHeight;
+
+    function glitch() {
+      gctx.clearRect(0, 0, glitchCanvas.width, glitchCanvas.height);
+      for (let i = 0; i < 10; i++) {
+        gctx.fillStyle = `rgba(0, 255, 204, ${Math.random() * 0.1})`;
+        let x = Math.random() * glitchCanvas.width;
+        let y = Math.random() * glitchCanvas.height;
+        let w = Math.random() * 300;
+        let h = Math.random() * 5;
+        gctx.fillRect(x, y, w, h);
+      }
+    }
+    setInterval(glitch, 80);
+
+    // MATRIX CANVAS
+    const matrixCanvas = document.getElementById("matrixCanvas");
+    const ctx = matrixCanvas.getContext("2d");
+    matrixCanvas.width = window.innerWidth;
+    matrixCanvas.height = window.innerHeight;
+    let cols = Math.floor(matrixCanvas.width / 20);
+    let drops = Array(cols).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+      ctx.fillStyle = "#00ffcc";
+      ctx.font = "16px monospace";
+      for (let i = 0; i < drops.length; i++) {
+        const char = String.fromCharCode(0x30A0 + Math.random() * 96);
+        ctx.fillText(char, i * 20, drops[i] * 20);
+        if (drops[i] * 20 > matrixCanvas.height || Math.random() > 0.95) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener("resize", () => {
+      glitchCanvas.width = window.innerWidth;
+      glitchCanvas.height = window.innerHeight;
+      matrixCanvas.width = window.innerWidth;
+      matrixCanvas.height = window.innerHeight;
+    });
+    function focusInput(e) {
+  if (e.key === "Enter" && document.activeElement.tagName !== "INPUT") {
+    document.getElementById("secretCode").focus();
+  }
+}
+setTimeout(() => {
+  codeEntry.style.display = "flex";
+  document.getElementById("secretCode").focus(); // Donne automatiquement le focus
+}, 7000);
+  </script>
+</body>
+</html>

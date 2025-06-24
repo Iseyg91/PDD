@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Résous l'énigme du mois et débloque le Premium sur Project : Delta.">
+  <title>Project : Delta - Enigme du Mois</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Share Tech Mono', monospace;
+      background: linear-gradient(135deg, #000a1f, #001f2f);
+      color: #00ffcc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      text-shadow: 0 0 10px #00ffcc;
+      margin-bottom: 2rem;
+    }
+
+    .step {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 600px;
+      width: 100%;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #00ffcc;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffcc44;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .step.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    input[type="text"] {
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      background: rgba(0, 255, 204, 0.1);
+      border: 2px solid #00ffcc;
+      border-radius: 8px;
+      color: #00ffcc;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #00ffaa;
+      box-shadow: 0 0 8px #00ffaa88;
+    }
+
+    button {
+      padding: 0.8rem 1.5rem;
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: #00ffaa;
+      transform: scale(1.05);
+    }
+
+    .success {
+      color: #00ff88;
+      font-size: 1.4rem;
+      text-align: center;
+      text-shadow: 0 0 10px #00ff88;
+    }
+
+    code {
+      background: #001f2f;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      color: #00ffcc;
+    }
+
+    .error {
+      color: #ff0044;
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .step {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+<h1>Énigme du Mois – Project : Delta</h1>
+
+<section class="step active" id="step1" aria-label="Énigme 1">
+  <p><em>Canal crypté... Transmission entrante...</em></p>
+  <p><strong>Agent n°δ, votre présence est confirmée.</strong><br>
+  Le protocole <strong>Δ-Class</strong> a été déclenché. Vous êtes sur le point d'entamer une série d'épreuves réservées aux esprits les plus affûtés. Chaque énigme résolue vous rapprochera de la vérité. L’échec n’est pas une option.</p>
+  <p><strong>— Mission initiale :</strong><br>
+  "Je commence la nuit, je disparais le jour. Qui suis-je ?"</p>
+  <input type="text" id="answer1" placeholder="Entrez votre réponse..." aria-label="Réponse à l'étape 1">
+  <div class="error" id="error1"></div>
+  <button data-step="1">Valider</button>
+</section>
+
+    <section class="step" id="step2" aria-label="Énigme 2">
+      <p><strong>ÉTAPE 2 :</strong> J’ai des clés mais pas de serrures, j’ai de l’espace mais pas de pièce. Que suis-je ?</p>
+      <input type="text" id="answer2" placeholder="Réponse..." aria-label="Réponse à l'étape 2">
+      <div class="error" id="error2"></div>
+      <button data-step="2">Valider</button>
+    </section>
+
+    <section class="step" id="step3" aria-label="Énigme finale">
+      <p><strong>ÉTAPE FINALE :</strong> Mon premier est l’initiale de "Delta". Mon second est un synonyme de lumière. Mon tout est ce que tu as débloqué.</p>
+      <input type="text" id="answer3" placeholder="Réponse finale..." aria-label="Réponse à l'étape finale">
+      <div class="error" id="error3"></div>
+      <button data-step="3">Valider</button>
+    </section>
+
+    <section class="step" id="successStep" aria-label="Succès débloqué">
+      <p class="success">🎉 Bravo ! Tu viens de débloquer le <strong>Premium</strong> Project : Delta ! 🎉</p>
+      <p>Contacte le support avec le mot secret : <code>DELUXE-LIGHT</code></p>
+    </section>
+  </main>
+
+  <script>
+    const steps = {
+      1: {
+        correct: ["l'ombre", "l’ombre", "ombre"],
+        next: "step2"
+      },
+      2: {
+        correct: ["clavier", "un clavier"],
+        next: "step3"
+      },
+      3: {
+        correct: ["delight", "de light"],
+        next: "successStep"
+      }
+    };
+
+    document.querySelectorAll("button[data-step]").forEach(button => {
+      button.addEventListener("click", () => {
+        const step = parseInt(button.dataset.step);
+        const input = document.getElementById(`answer${step}`);
+        const errorDiv = document.getElementById(`error${step}`);
+        const userAnswer = input.value.trim().toLowerCase();
+
+        if (steps[step].correct.includes(userAnswer)) {
+          document.getElementById(`step${step}`).classList.remove("active");
+          document.getElementById(steps[step].next).classList.add("active");
+        } else {
+          window.location.href = "echec.html";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

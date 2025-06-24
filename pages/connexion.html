@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion Project : Delta</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    /* Reset & base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #000a1f, #001f2f, #004d4d);
+      color: #00ffcc;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 12px #00ffcc;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    label {
+      position: absolute;
+      left: -9999px; /* accessible but invisible */
+    }
+
+    input[type="text"] {
+      padding: 0.75rem 1rem;
+      font-family: monospace;
+      font-size: 1.2rem;
+      border-radius: 6px;
+      border: 2px solid #00ffcc;
+      background: rgba(0, 255, 204, 0.1);
+      color: #00ffcc;
+      transition: border-color 0.3s ease, background 0.3s ease;
+      outline-offset: 2px;
+      outline-color: transparent;
+      caret-color: #00ffcc;
+      user-select: text;
+    }
+    input[type="text"]:focus {
+      border-color: #00ffaa;
+      background: rgba(0, 255, 170, 0.15);
+      outline-color: #00ffaa;
+    }
+    input::placeholder {
+      color: #00ffccaa;
+      font-style: italic;
+    }
+
+    button {
+      font-family: monospace;
+      font-size: 1.3rem;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: none;
+      background: #00ffcc;
+      color: #000;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 0 15px #00ffcc88;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      user-select: none;
+    }
+    button:hover, button:focus-visible {
+      background: #00ffaa;
+      box-shadow: 0 0 25px #00ffaacc;
+      outline: none;
+    }
+    button:disabled {
+      background: #004d4d;
+      cursor: not-allowed;
+      box-shadow: none;
+      color: #006666;
+    }
+
+    #status {
+      margin-top: 2rem;
+      font-size: 1.4rem;
+      min-height: 2em;
+      text-shadow: 0 0 8px #00ffcc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      user-select: none;
+    }
+
+    /* Spinner */
+    .spinner {
+      border: 3px solid rgba(0, 255, 204, 0.3);
+      border-top: 3px solid #00ffcc;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      body {
+        padding: 1rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      input[type="text"] {
+        font-size: 1rem;
+      }
+      button {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Connexion au système</h1>
+
+  <form id="loginForm" autocomplete="off" novalidate>
+    <label for="pseudo">Pseudonyme</label>
+    <input type="text" id="pseudo" name="pseudo" placeholder="Pseudonyme" required minlength="2" maxlength="30" autocomplete="username" />
+    
+    <label for="immatriculation">Immatriculation</label>
+    <input type="text" id="immatriculation" name="immatriculation" placeholder="Immatriculation" required minlength="4" maxlength="20" autocomplete="off" />
+
+    <button type="submit" id="connectBtn">Se connecter</button>
+  </form>
+
+  <div id="status">—</div>
+
+<script>
+  const form = document.getElementById('loginForm');
+  const statusDiv = document.getElementById('status');
+  const connectBtn = document.getElementById('connectBtn');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const pseudo = form.pseudo.value.trim();
+    const immatriculation = form.immatriculation.value.trim();
+
+    // Validation simple côté client (HTML5 gère déjà required, minlength)
+    if (!pseudo || !immatriculation) {
+      alert('Veuillez remplir tous les champs correctement.');
+      return;
+    }
+
+    // Désactivation du bouton pendant la requête
+    connectBtn.disabled = true;
+
+    // Affiche le spinner et texte
+    statusDiv.innerHTML = '<div class="spinner" aria-hidden="true"></div> Connexion en cours...';
+
+    try {
+      const res = await fetch('https://backend-5-zl86.onrender.com/api/connexion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pseudo, immatriculation })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        const message = data.error || 'Erreur de connexion';
+        throw new Error(message);
+      }
+
+      statusDiv.innerHTML = `✅ Connexion réussie. Bienvenue, <strong>${data.pseudo}</strong> !`;
+
+      // Redirection après 1.5 seconde
+      setTimeout(() => {
+        window.location.href = 'agent.html';
+      }, 1500);
+
+    } catch (err) {
+      statusDiv.innerHTML = `❌ <span role="alert">${err.message}</span>`;
+      console.error('Erreur connexion :', err);
+    } finally {
+      connectBtn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
